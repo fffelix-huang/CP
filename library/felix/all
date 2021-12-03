@@ -8,3 +8,4 @@
 #include <felix/random>
 #include <felix/type>
 #include <felix/debug>
+#include <felix/fenwick>
