@@ -2,11 +2,11 @@
 # $2 : brute
 # $3 : sol
 echo "Compiling" $1".cpp"
-g++ -std=c++17 -I . -Ofast $1.cpp -o $1
+g++ -std=c++17 -I . -O2 $1.cpp -o $1
 echo "Compiling" $2".cpp"
-g++ -std=c++17 -I . -Ofast $2.cpp -o $2
+g++ -std=c++17 -I . -O2 $2.cpp -o $2
 echo "Compiling" $3".cpp"
-g++ -std=c++17 -I . -Ofast $3.cpp -o $3
+g++ -std=c++17 -I . -O2 $3.cpp -o $3
 for((i = 1; ; ++i)); do
 	./$1 $i > debug_in
 	./$3 < debug_in > my_out
