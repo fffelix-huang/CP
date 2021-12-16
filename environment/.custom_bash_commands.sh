@@ -1,15 +1,15 @@
 function make() {
-	echo -e '\033[1;32m[No flag]\033[m Compiling' $1'.cpp with c++17.'
+	echo -e '\033[1;42m[No flag]\033[m Compiling' $1'.cpp with c++17.'
 	'g++' '-std=c++17' '-I' '.' $1'.cpp' '-o' $1
 }
 
 function fast() {
-	echo -e '\033[1;35m[-O2 flag]\033[m Compiling' $1'.cpp with c++17.'
+	echo -e '\033[1;45m[-O2 flag]\033[m Compiling' $1'.cpp with c++17.'
 	'g++' '-std=c++17' '-I' '.' '-O2' $1'.cpp' '-o' $1
 }
 
 function debug() {
-	echo -e '\033[1;31m[DEBUG MODE]\033[m Compiling' $1'.cpp with c++17.'
+	echo -e '\033[1;41m[DEBUG MODE]\033[m Compiling' $1'.cpp with c++17.'
 	'g++' '-std=c++17' '-I' '.' '-DLOCAL' $1'.cpp' '-o' $1
 }
 
