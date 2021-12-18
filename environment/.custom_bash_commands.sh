@@ -25,7 +25,7 @@ function run_stress_test() {
 		./$3 < debug_in > my_out
 		./$2 < debug_in > ans_out
 		diff -Z my_out ans_out || break
-		echo -e "\033[1;32mPassed test: " $i "\033[m"
+		echo -e "\033[1;32mPassed test:" $i "\033[m"
 	done
 
 	echo -e "\033[1;45mWA on the following test\033[m"
