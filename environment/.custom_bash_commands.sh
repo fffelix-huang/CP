@@ -13,7 +13,7 @@ function debug() {
 	'g++' '-std=c++17' '-I' '.' '-DLOCAL' $1'.cpp' '-o' $1
 }
 
-function stress_test() {
+function run_stress_test() {
 	# $1 : gen
 	# $2 : brute
 	# $3 : sol
