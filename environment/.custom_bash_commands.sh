@@ -42,9 +42,11 @@ function run_stress_test() {
 function submit() {
 	echo 'Expanding' $1'.cpp'
 	'python3' 'expander.py' $1'.cpp'
+	# for wsl
 	clip.exe < combined.cpp
 }
 
+# for wsl
 function open() {
 	echo 'Opening' $1
 	'cmd.exe' '/C' 'start' $1
