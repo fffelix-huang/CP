@@ -5,6 +5,7 @@
 #include <tuple>
 #include <cmath>
 #include <numeric>
+#include <cassert>
 
 namespace felix {
 
