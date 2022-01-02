@@ -7,6 +7,7 @@
 
 namespace felix {
 
+// Find all sccs of a graph using Kosaraju's algorithm in O(V + E)
 class scc_graph {
 public:
 	scc_graph() : scc_graph(0) {}
@@ -63,10 +64,10 @@ public:
 					scc_dfs(cur, v);
 		};
 		std::vector<std::vector<int>> groups;
-		for(int i = 0; i < n; ++i) {
-			if(!vis[i]) {
+		for(int i = n - 1; ~i; --i) {
+			if(!vis[topo[i]]) {
 				std::vector<int> cur;
-				scc_dfs(cur, i);
+				scc_dfs(cur, topo[i]);
 				groups.push_back(cur);
 			}
 		}
