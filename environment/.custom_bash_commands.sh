@@ -27,7 +27,7 @@ function run_stress_test() {
 		diff -Z my_out ans_out || break
 		echo -e "\033[1;32mPassed test:" $i "\033[m"
 	done
-
+	echo -ne '\007'
 	echo -e "\033[1;45mWA on the following test\033[m"
 	echo -e "\033[0;46mInput\033[m"
 	cat debug_in
@@ -42,11 +42,9 @@ function run_stress_test() {
 function submit() {
 	echo 'Expanding' $1'.cpp'
 	'python3' 'expander.py' $1'.cpp'
-	# for wsl
 	clip.exe < combined.cpp
 }
 
-# for wsl
 function open() {
 	echo 'Opening' $1
 	'cmd.exe' '/C' 'start' $1
