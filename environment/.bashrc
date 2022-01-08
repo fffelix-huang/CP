@@ -1,2 +1,2 @@
 source ~/.custom_bash_commands.sh
-cd ~/cp/
+cd /mnt/c/Felix/cp/
