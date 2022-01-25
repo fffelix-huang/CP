@@ -15,11 +15,11 @@ public:
 	using graph<T>::edges;
 	using graph<T>::g;
 
-	std::vector<int> depth, parent, sz;
+	std::vector<int> depth, parent, sz, order, pos;
 
 	forest() : forest(0) {}
 
-	forest(int _n) : graph<T>(_n), depth(std::vector<int>(_n)), parent(std::vector<int>(_n)), sz(std::vector<int>(_n)) {}
+	forest(int _n) : graph<T>(_n), depth(std::vector<int>(_n)), parent(std::vector<int>(_n)), sz(std::vector<int>(_n)), pos(std::vector<int>(_n)) {}
 
 	virtual void add_edge(int from, int to, T cost = 1) {
 		assert(0 <= from && from < n);
@@ -33,16 +33,20 @@ public:
 
 	void build(int root) {
 		assert(0 <= root && root < n);
+		order.reserve(n * 2);
 		std::function<void(int, int)> dfs = [&](int u, int p) {
 			depth[u] = (u == root ? 0 : depth[p] + 1);
 			parent[u] = p;
 			sz[u] = 1;
+			pos[u] = int(order.size());
+			order.push_back(u);
 			for(const int& id : g[u]) {
 				auto& e = edges[id];
 				int v = e.from ^ e.to ^ u;
 				if(v == p)
 					continue;
 				dfs(v, u);
+				order.push_back(u);
 				sz[u] += sz[v];
 			}
 		};
