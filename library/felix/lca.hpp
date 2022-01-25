@@ -4,10 +4,20 @@
 #include <cassert>
 #include <vector>
 #include <functional>
+#include <algorithm>
 #include "felix/internal_bit.hpp"
 #include "felix/forest.hpp"
+#include "felix/sparsetable.hpp"
 
 namespace felix {
+
+namespace internal {
+
+inline std::pair<int, int> __lca_op(std::pair<int, int> a, std::pair<int, int> b) {
+	return min(a, b);
+}
+
+} // namespace internal
 
 template<class T>
 class LCA : public forest<T> {
@@ -19,10 +29,13 @@ public:
 	using forest<T>::parent;
 	using forest<T>::depth;
 	using forest<T>::sz;
+	using forest<T>::pos;
+	using forest<T>::order;
 
 private:
 	int log;
 	std::vector<std::vector<int>> dp;
+	sparse_table<std::pair<int, int>, internal::__lca_op> table;
 
 public:
 	LCA() : LCA(0) {}
@@ -31,7 +44,7 @@ public:
 		dp = std::vector<std::vector<int>>(_n, std::vector<int>(log + 1));
 	}
 
-	void build_lca(int root) {
+	void build_lift(int root) {
 		build(root);
 		for(int i = 0; i < n; ++i)
 			dp[i][0] = parent[i];
@@ -49,22 +62,22 @@ public:
 		return u;
 	}
 
+	void build_lca(int root) {
+		build(root);
+		std::vector<std::pair<int, int>> v;
+		v.reserve(int(order.size()));
+		for(int& u : order)
+			v.push_back({depth[u], u});
+		table = sparse_table<std::pair<int, int>, internal::__lca_op>(v);
+	}
+
 	inline int lca(int a, int b) const {
 		assert(0 <= a && a < n);
 		assert(0 <= b && b < n);
-		if(depth[a] > depth[b])
-			std::swap(a, b);
-		b = lift(b, depth[b] - depth[a]);
-		if(a == b)
-			return a;
-		for(int i = log; ~i; --i) {
-			int A = dp[a][i], B = dp[b][i];
-			if(A != B) {
-				a = A;
-				b = B;
-			}
-		}
-		return dp[a][0];
+		int l = pos[a], r = pos[b];
+		if(l > r)
+			std::swap(l, r);
+		return table.prod(l, r).second;
 	}
 };
 
