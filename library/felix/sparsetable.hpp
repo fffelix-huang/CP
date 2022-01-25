@@ -11,6 +11,8 @@ namespace felix {
 template<class T, T (*op)(T, T)>
 class sparse_table {
 public:
+	sparse_table() : n(0) {}
+
 	sparse_table(const std::vector<T>& a) {
 		n = static_cast<int>(a.size());
 		int max_log = 32 - __builtin_clz(n);
