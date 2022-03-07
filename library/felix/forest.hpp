@@ -30,7 +30,7 @@ private:
 	int n, log;
 	std::vector<edge> edges;
 	std::vector<std::vector<int>> G;
-	std::vector<int> depth, subforest_size;
+	std::vector<int> depth, subtree_size;
 	std::vector<T> dist;
 	std::vector<int> euler_tour, first_occurrence, order, in, out;
 	std::vector<std::vector<int>> bin_lift;
@@ -57,8 +57,9 @@ public:
 		assert(0 <= root && root < n);
 		assert((int) edges.size() == n - 1);
 		depth.assign(n, 0);
-		subforest_size.assign(n, 0);
+		subtree_size.assign(n, 0);
 		dist.assign(n, 0);
+		euler_tour.reserve(2 * n - 1);
 		first_occurrence.assign(n, 0);
 		in.assign(n, 0);
 		out.assign(n, 0);
@@ -66,7 +67,7 @@ public:
 		order.reserve(n * 2);
 		std::function<void(int, int, int)> dfs = [&](int u, int p, int d) {
 			depth[u] = d;
-			subforest_size[u] = 1;
+			subtree_size[u] = 1;
 			in[u] = (int) order.size();
 			bin_lift[u][0] = p;
 			order.push_back(u);
@@ -79,7 +80,7 @@ public:
 					continue;
 				dist[v] = dist[u] + x;
 				dfs(v, u, d + 1);
-				subforest_size[u] += subforest_size[v];
+				subtree_size[u] += subtree_size[v];
 				euler_tour.push_back(u);
 			}
 			out[u] = (int) order.size();
