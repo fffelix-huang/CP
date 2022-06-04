@@ -4,7 +4,6 @@
 #include <vector>
 #include <queue>
 #include <numeric>
-#include "felix/debug.hpp"
 
 namespace felix {
 
